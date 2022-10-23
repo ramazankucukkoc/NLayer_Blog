@@ -32,6 +32,7 @@ namespace Business.Concrete
             category.CreatedByName = createdByName;
             category.ModifiedByName = createdByName;
             var addedCategory = await _unitOfWork.Categories.AddAsync(category);
+            await _unitOfWork.SaveAsync();
             return new DataResult<CategoryDto>(ResultStatus.Success,$"{categoryAddDto.Name} adlı kategori başarıyla eklenmiştir.", new CategoryDto
             {
                 Category=addedCategory,

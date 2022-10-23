@@ -4,15 +4,15 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@*@if (Model.ResultStatus == ResultStatus.Success)
-{*@
+@if (Model.ResultStatus == ResultStatus.Success)
+{
 
     <div id="modalPlaceHolder" aria-hidden="true">
     </div>
     <div class="card mb-4">
-        <div class="card-header">
+        <div class="card-header ">
             <i class="fas fa-table mr-1"></i>
-            DataTable Example
+         Kategoriler Tablosu    
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -32,17 +32,6 @@
 
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            @*                <th>Position</th>
-                        <th>Office</th>
-                        <th>Extn.</th>
-                        <th>Start date</th>
-                        <th>Salary</th>*@
-                        </tr>
-                    </tfoot>
                     <tbody>
                         @foreach (var category in Model.Categories)
                         {
@@ -64,14 +53,14 @@
             </div>
         </div>
     </div>
-@*}
+}
 @if (Model.ResultStatus == ResultStatus.Error)
 {
     <div class="alert alert-danger mt-3">
         @Model.Message <br />
         Dashboard sayfasına geri dönmek için lütfen <a class="alert-link" asp-area="Admin" asp-controller="Home" asp-action="Index">tıklayınız.</a>
     </div>
-}*@
+}
 @section Scripts{
     <script>
         $(document).ready(function () {
@@ -87,9 +76,9 @@
                             id: "btnAdd",
                         },
                         className: 'btn btn-warning',
-                        action: function (e, dt, node, config) {
-                            alert('Ekle butonuna basıldı');
-                        }
+                        //action: function (e, dt, node, config) {
+                        //    alert('Ekle butonuna basıldı');
+                        //}
                     },
                     {
                         text: 'Yenile',
@@ -102,8 +91,40 @@
 
                 ],
 
+           language: {
+                    "sDecimal": ",",
+                    "sEmptyTable": "Tabloda herhangi bir veri mevcut değil",
+                    "sInfo": "_TOTAL_ kayıttan _START_ - _END_ arasındaki kayıtlar gösteriliyor",
+                    "sInfoEmpty": "Kayıt yok",
+                    "sInfoFiltered": "(_MAX_ kayıt içerisinden bulunan)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "Sayfada _MENU_ kayıt göster",
+                    "sLoadingRecords": "Yükleniyor...",
+                    "sProcessing": "İşleniyor...",
+                    "sSearch": "Ara:",
+                    "sZeroRecords": "Eşleşen kayıt bulunamadı",
+                    "oPaginate": {
+                        "sFirst": "İlk",
+                        "sLast": "Son",
+                        "sNext": "Sonraki",
+                        "sPrevious": "Önceki"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": artan sütun sıralamasını aktifleştir",
+                        "sSortDescending": ": azalan sütun sıralamasını aktifleştir"
+                    },
+                    "select": {
+                        "rows": {
+                            "_": "%d kayıt seçildi",
+                            "0": "",
+                            "1": "1 kayıt seçildi"
+                        }
+                    }
+                }
             });
             //Datatables finish
+            @*Ajax get metodu*@
             $(function () {
                 const url = '@Url.Action("Add","Categories")';
                 const placeHolderDiv = $("#modalPlaceHolder");
@@ -115,7 +136,53 @@
                         placeHolderDiv.find(".modal").modal('show');
                     });
                 });
+             @*Ajax post metodu*@
+             placeHolderDiv.on('click',
+                            '#btnSave',
+             function(event) {
+                        event.preventDefault();
+                        const form = $('#form-category-add');
+                        const actionUrl = form.attr('action');
+                        const dataToSend = form.serialize();
+                        $.post(actionUrl, dataToSend).done(function(data) {
+                            console.log(data);
+
+                            const categoryAddAjaxModel = jQuery.parseJSON(data);
+                            console.log(categoryAddAjaxModel);
+
+                            const newFormBody = $('.modal-body', categoryAddAjaxModel.CategoryAddPartial);
+                            placeHolderDiv.find('.modal-body').replaceWith(newFormBody);
+                            const isValid = newFormBody.find('[name="IsValid"]').val() === 'true';
+                            if (isValid) {
+                                placeHolderDiv.find('.modal').modal('hide');
+                                const newTableRow = `
+                                <tr>
+                                                    <td>${categoryAddAjaxModel.CategoryDto.Category.Id}</td>
+                                                    <td>${categoryAddAjaxModel.CategoryDto.Category.Name}</td>
+                                                    <td>${categoryAddAjaxModel.CategoryDto.Category.Description}</td>
+                                                    <td>${categoryAddAjaxModel.CategoryDto.Category.IsActive}</td>
+                                                    <td>${categoryAddAjaxModel.CategoryDto.Category.IsDeleted}</td>
+                                                    <td>${categoryAddAjaxModel.CategoryDto.Category.Note}</td>
+                                                    <td>${categoryAddAjaxModel.CategoryDto.Category.CreatedDate}</td>
+                                                    <td>${categoryAddAjaxModel.CategoryDto.Category.CreatedByName}</td>
+                                                    <td>${categoryAddAjaxModel.CategoryDto.Category.ModifiedDate}</td>
+                                                    <td>${categoryAddAjaxModel.CategoryDto.Category.ModifiedByName}</td>
+                                                </tr>`;
+                                const newTableRowObject = $(newTableRow);
+                                newTableRowObject.hide();
+                                $('#table').append(newTableRowObject);
+                                newTableRowObject.fadeIn(3500);
+                                toastr.success(`${categoryAddAjaxModel.CategoryDto.Message}`, 'Başarılı İşlem!');
+                            }
+                        });
+                    });
+
+
+
+
             });
+
+
 
 
         });

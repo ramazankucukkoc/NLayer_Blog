@@ -14,6 +14,7 @@ namespace DataAccess.Configuration
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.HasKey(c => c.Id);
+            builder.Property(x => x.Id).UseIdentityColumn();
             builder.Property(c => c.Id).ValueGeneratedOnAdd();
             builder.Property(c => c.Name).IsRequired();
             builder.Property(c => c.Name).HasMaxLength(70);
