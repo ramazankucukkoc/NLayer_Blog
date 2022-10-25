@@ -16,10 +16,11 @@ namespace Business.Autofac
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<EfCategoryDal>().As<ICategoryDal>();
+            builder.RegisterType<EfProductDal>().As<IProductDal>();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
-            builder.RegisterType<EfArticleDal>().As<IArticleDal>();
             
             builder.RegisterType<CategoryManager>().As<ICategoryService>();
+            builder.RegisterType<ProductManager>().As<IProductService>();
 
             //builder.RegisterType<IArticleServi>().As<EfArticleDal>();
 

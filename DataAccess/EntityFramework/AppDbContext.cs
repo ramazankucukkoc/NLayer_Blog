@@ -28,7 +28,14 @@ namespace DataAccess.EntityFramework
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Category> Categories { get; set; }     
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<CompanyTransaction> CompanyTransactions { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<CustomerTransaction> CustomerTransactions { get; set; }
+        public DbSet<Departman> Departmens { get; set; }
+        public DbSet<Personel> Personels { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<Article> Articles { get; set; }
     }
 }

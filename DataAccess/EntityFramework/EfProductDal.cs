@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.EntityFramework
 {
-    public class EfArticleDal : EfEntityRepositoryBase<Article>, IArticleDal
+    public class EfProductDal : EfEntityRepositoryBase<Product>, IProductDal
     {
-        public EfArticleDal(DbContext context) : base(context)
+        public EfProductDal(DbContext context) : base(context)
         {
         }
     }

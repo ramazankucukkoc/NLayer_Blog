@@ -1,10 +1,11 @@
-﻿using Business.Abstract;
+﻿    using Business.Abstract;
 using Core.Extensions;
 using Core.Utilities.Results.ComplexTypes;
 using Core.Utilities.Results.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using WEBMVC.Models;
 
 namespace WEBMVC.Controllers
@@ -21,7 +22,7 @@ namespace WEBMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var result = await _categoryService.GetAll();
+            var result = await _categoryService.GetAllByNonDeleted();
             return View(result.Data);
 
         }
@@ -35,7 +36,7 @@ namespace WEBMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _categoryService.Add(categoryAddDto, "Alper Tunga");
+                var result = await _categoryService.Add(categoryAddDto, "Ramazan Küçükkoç");
                 if (result.ResultStatus == ResultStatus.Success)
                 {
                     var categoryAddAjaxModel = JsonSerializer.Serialize(new CategoryAddAjaxModel
@@ -51,8 +52,57 @@ namespace WEBMVC.Controllers
                 CategoryAddPartial = await this.RenderViewToStringAsync("_CategoryAddPartial", categoryAddDto)
             });
             return Json(categoryAddAjaxErrorModel);
-
         }
-
+        [HttpGet]
+        public async Task<IActionResult> Update(int categoryId)
+        {
+            var result = await _categoryService.GetCategoryUpdate(categoryId);
+            if (result.ResultStatus==ResultStatus.Success)
+            {
+                return PartialView("_CategoryUpdatePartial",result.Data);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(CategoryUpdateDto categoryUpdateDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _categoryService.Update(categoryUpdateDto, "Ramazan Küçükkoç");
+                if (result.ResultStatus == ResultStatus.Success)
+                {
+                    var categoryUpdateAjaxModel = JsonSerializer.Serialize(new CategoryUpdateAjaxModel
+                    {
+                        CategoryDto = result.Data,
+                        CategoryUpdatePartial = await this.RenderViewToStringAsync("_CategoryUpdatePartial", categoryUpdateDto)
+                    });
+                    return Json(categoryUpdateAjaxModel);
+                }
+            }
+            var categoryUpdateAjaxErrorModel = JsonSerializer.Serialize(new CategoryAddAjaxModel
+            {
+                CategoryAddPartial = await this.RenderViewToStringAsync("_CategoryUpdatePartial", categoryUpdateDto)
+            });
+            return Json(categoryUpdateAjaxErrorModel);
+        }
+        public async Task<JsonResult> GetAllCategories()
+        {
+            var result=await _categoryService.GetAllByNonDeleted();
+            var categories = JsonSerializer.Serialize(result.Data,new JsonSerializerOptions
+            {
+                ReferenceHandler=ReferenceHandler.Preserve
+            });
+            return Json(categories);
+        }
+        [HttpPost]
+        public async Task<JsonResult>Delete(int categoryId)
+        {
+            var result = await _categoryService.Delete(categoryId, "Ramazan Küçükkoç");
+            var deletedCategory = JsonSerializer.Serialize(result.Data);
+            return Json(deletedCategory);
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace Entities.Concrete
         public int Price { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        public ICollection<CompanyTransaction> CompanyTransactions { get; set; }
+        public ICollection<CustomerTransaction> CustomerTransactions { get; set; }
 
     }
 }

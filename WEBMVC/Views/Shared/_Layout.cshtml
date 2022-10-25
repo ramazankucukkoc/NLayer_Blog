@@ -3,54 +3,60 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WEBMVC</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/WEBMVC.styles.css" asp-append-version="true" />
+	<title>Ramazan KÜÇÜKKOÇ</title> 
     @await Html.PartialAsync("_LayoutCssPartial")
+
+    <style>
+        .site-header {
+            background-color: rgba(0, 0, 0, .85);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            backdrop-filter: saturate(180%) blur(20px);
+        }
+
+            .site-header a {
+                color: #8e8e8e;
+                transition: color .15s ease-in-out;
+            }
+
+                .site-header a:hover {
+                    color: #fff;
+                    text-decoration: none;
+                }
+    </style>
 </head>
 <body>
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin Paneli</a>
-        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
-        <!-- Navbar Search-->
-        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="Arama..." aria-label="Search" aria-describedby="basic-addon2" />
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
-                </div>
-            </div>
-        </form>
-        <!-- Navbar-->
-        <ul class="navbar-nav ml-auto ml-md-0">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="#">Ayarlar</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="login.html">Çıkış Yap</a>
-                </div>
-            </li>
-        </ul>
-    </nav>
-    <div id="layoutSidenav">
-        @await Html.PartialAsync("_LayoutSideBarNavPartial")
-        <div id="layoutSidenav_content">
-            <main>
-                <div class="container-fluid">
-                    @RenderBody()
-                </div>
-            </main>
-         
+    <header class="site-header sticky-top py-1">
+        <nav class="container d-flex flex-column flex-md-row justify-content-between">
+            <a class="py-2" href="#" aria-label="Product">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img" viewBox="0 0 24 24"><title>Product</title><circle cx="12" cy="12" r="10" /><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94" /></svg>
+            </a>
+            <a class="py-2 d-none d-md-inline-block" asp-controller="Products" asp-action="Index">Ürünler</a>
+
+            <a class="py-2 d-none d-md-inline-block" asp-controller="Categories" asp-action="Index">Kategoriler</a>
+            <a class="py-2 d-none d-md-inline-block" href="#">Features</a>
+            <a class="py-2 d-none d-md-inline-block" href="#">Enterprise</a>
+            <a class="py-2 d-none d-md-inline-block" href="#">Support</a>
+            <a class="py-2 d-none d-md-inline-block" href="#">Pricing</a>
+            <a class="py-2 d-none d-md-inline-block" href="#">Cart</a>
+        </nav>
+    </header>
+<main>
+        <div class="position-relative overflow-hidden p-3 p-md-2 m-md-3 text-center bg-light">
+           
+				@RenderBody()
+       
+           
+
         </div>
-    </div>
+
+</main>       
+   
+
+    
     
 
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    
     @await Html.PartialAsync("_LayoutJsPartial")
     @await RenderSectionAsync("Scripts", required: false)
 </body>
