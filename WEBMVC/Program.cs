@@ -21,7 +21,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlCon"));
 });
 
-builder.Services.AddAutoMapper(typeof(CategoryProfile),typeof(ArticleProfile),typeof(ProductProfile));
+builder.Services.AddAutoMapper(typeof(CategoryProfile),
+    typeof(ArticleProfile),typeof(ProductProfile),typeof(CompanyProfile),typeof(CompanyTransactionProfile),
+    typeof(CustomerProfile),typeof(CustomerTransactionProfile),typeof(PersonelProfile),typeof(DepartmanProfile));
+
 
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());

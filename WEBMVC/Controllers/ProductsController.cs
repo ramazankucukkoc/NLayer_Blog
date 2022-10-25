@@ -5,6 +5,8 @@ using Core.Utilities.Results.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Build.Framework;
+using NuGet.Protocol;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using WEBMVC.Models;
@@ -34,8 +36,8 @@ namespace WEBMVC.Controllers
         [HttpPost]
         public async Task <IActionResult> Add(ProductAddDto productAddDto)
         {
-            var categoryList=await _categoryService.GetAllByNonDeleted();
-            ViewBag.categories = new SelectList(categoryList.Data.ToString(), "Id", "Name");
+            //var categoryList=await _categoryService.GetAllByNonDeleted();
+            //ViewBag.categories = new SelectList((System.Collections.IEnumerable)categoryList.Data, "Id", "Name",productAddDto.CategoryId);
             if (ModelState.IsValid)
             {
                 var result = await _productService.Add(productAddDto, "Ramazan Küçükkoç");
@@ -55,7 +57,47 @@ namespace WEBMVC.Controllers
             });
             return Json(productAddAjaxErrorModel);
         }
-        public async Task<IActionResult> GetAllProducts()
+
+        [HttpGet]
+        public async Task<IActionResult> Update(int productId)
+        {
+            var result =await _productService.GetProductUpdate(productId);
+            if (result.ResultStatus==ResultStatus.Success)
+            {
+                return PartialView("_ProductUpdatePartial", result.Data);
+
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult>Update(ProductUpdateDto productUpdateDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _productService.Update(productUpdateDto, "Ramazan KÜÇÜKKOÇ");
+                if (result.ResultStatus ==ResultStatus.Success)
+                {
+                    var productUpdateAjaxModel = JsonSerializer.Serialize(new ProductUpdateAjaxModel
+                    {
+                        ProductDto = result.Data,
+                        ProductUpdatePartial = await this.RenderViewToStringAsync("_ProductUpdatePartial", productUpdateDto)
+                    });
+                    return Json(productUpdateAjaxModel);
+
+                }
+            }
+            var productUpdateAjaxErrorModel = JsonSerializer.Serialize(new ProductUpdateAjaxModel
+            {
+                ProductUpdatePartial = await this.RenderViewToStringAsync("_ProductUpdatePartial", productUpdateDto)
+            });
+            return Json(productUpdateAjaxErrorModel);
+
+        }
+
+        public async Task<JsonResult> GetAllProducts()
         {
             var result=await _productService.GetAllByNonDeleted();
             var products = JsonSerializer.Serialize(result.Data, new JsonSerializerOptions
@@ -63,6 +105,14 @@ namespace WEBMVC.Controllers
                 ReferenceHandler = ReferenceHandler.Preserve
             }) ;
             return Json(products);
+        }
+        [HttpPost]
+        public async Task<JsonResult> Delete(int productId)
+        {
+            var result = await _productService.Delete(productId, "Ramazan Küçükkoç");
+            var deleteProduct = JsonSerializer.Serialize(result.Data);
+            return Json(deleteProduct);
+
         }
 
     }

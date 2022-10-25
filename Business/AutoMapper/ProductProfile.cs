@@ -14,8 +14,8 @@ namespace Business.AutoMapper
         public ProductProfile()
         {
             CreateMap<ProductAddDto, Product>().ForMember(dest => dest.CreatedDate, p => p.MapFrom(x => DateTime.Now));
-            CreateMap<CustomerTransactionUpdateDto, Product>().ForMember(dest => dest.CreatedDate, p => p.MapFrom(x => DateTime.Now));
-            CreateMap<Product, CustomerTransactionUpdateDto>();
+            CreateMap<ProductUpdateDto, Product>().ForMember(dest => dest.CreatedDate, p => p.MapFrom(x => DateTime.Now));
+            CreateMap<Product, ProductUpdateDto>();
         }
     }
 }

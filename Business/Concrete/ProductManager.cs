@@ -43,9 +43,30 @@ namespace Business.Concrete
                 }) ;
         }
 
-        public Task<IDataResult<ProductDto>> Delete(int productId, string modifiedByName)
+        public async Task<IDataResult<ProductDto>> Delete(int productId, string modifiedByName)
         {
-            throw new NotImplementedException();
+            var productFind = await _unitOfWork.Product.GetAsync(p => p.Id == productId);
+            if (productFind!=null)
+            {
+                productFind.IsDeleted = true;
+                productFind.ModifiedByName = modifiedByName;
+                productFind.ModifiedDate = DateTime.Now;
+                var deleteProduct=await _unitOfWork.Product.UpdateAsync(productFind);
+                await _unitOfWork.SaveAsync();
+                return new DataResult<ProductDto>(ResultStatus.Success, $"{deleteProduct.ProductName} adlı ürün silinmiştir.", new ProductDto
+                {
+                    Product = deleteProduct,
+                    ResultStatus = ResultStatus.Success,
+                    Message = $"{deleteProduct.ProductName} aslı ürün silindi"
+                });
+            }
+            return new DataResult<ProductDto>(ResultStatus.Success, "Böyle bir ürün bulunamamıştır.", new ProductDto
+            {
+                Product = null,
+                ResultStatus = ResultStatus.Error,
+                Message = $"Böyle bir ürün bulunamadı"
+            });
+
         }
 
         public Task<IDataResult<ProductDto>> Get(int productId)
@@ -105,9 +126,20 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
-        public Task<IDataResult<ProductUpdateDto>> GetProductUpdate(int productId)
+        public async Task<IDataResult<ProductUpdateDto>> GetProductUpdate(int productId)
         {
-            throw new NotImplementedException();
+            var result = await _unitOfWork.Product.AnyAsync(x => x.Id == productId);
+            if (result)
+            {
+                var product = await _unitOfWork.Product.GetAsync(x => x.Id == productId);
+                var updateProduct=_mapper.Map<ProductUpdateDto>(product);
+                return new DataResult<ProductUpdateDto>(ResultStatus.Success, updateProduct);
+            }
+            else
+            {
+                return new DataResult<ProductUpdateDto>(ResultStatus.Error, "Böyle bir kategori Bulunamadı", null);
+            }
+
         }
 
         public Task<IResult> HardDelete(int productId)
@@ -115,9 +147,21 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
-        public Task<IDataResult<ProductDto>> Update(ProductUpdateDto productUpdateDto, string modifiedByName)
+        public async Task<IDataResult<ProductDto>> Update(ProductUpdateDto productUpdateDto, string modifiedByName)
         {
-            throw new NotImplementedException();
+            var oldProduct = await _unitOfWork.Product.GetAsync(c => c.Id == productUpdateDto.Id);
+            var product = _mapper.Map<ProductUpdateDto, Product>(productUpdateDto, oldProduct);
+            product.ModifiedByName = modifiedByName;
+            var updatedProduct = await _unitOfWork.Product.UpdateAsync(product);
+            await _unitOfWork.SaveAsync();
+            return new DataResult<ProductDto>(ResultStatus.Success,
+                $"{productUpdateDto.ProductName} adlı ürün başarıyla güncellendi", new ProductDto
+                {
+                    Product = updatedProduct,
+                    ResultStatus = ResultStatus.Success,
+                    Message = $"{productUpdateDto.ProductName} adlı ürün başarıyla güncellendi"
+                });
+
         }
     }
 }

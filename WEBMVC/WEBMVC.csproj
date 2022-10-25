@@ -7,6 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Migrations\20221023135204_initial.cs" />
+    <Content Remove="wwwroot\Migrations\20221023135204_initial.Designer.cs" />
+    <Content Remove="wwwroot\Migrations\20221023201235_initial-2.cs" />
+    <Content Remove="wwwroot\Migrations\20221023201235_initial-2.Designer.cs" />
+    <Content Remove="wwwroot\Migrations\AppDbContextModelSnapshot.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="wwwroot\Migrations\20221023135204_initial.cs" />
+    <Compile Include="wwwroot\Migrations\20221023135204_initial.Designer.cs" />
+    <Compile Include="wwwroot\Migrations\20221023201235_initial-2.cs" />
+    <Compile Include="wwwroot\Migrations\20221023201235_initial-2.Designer.cs" />
+    <Compile Include="wwwroot\Migrations\AppDbContextModelSnapshot.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.8">
       <PrivateAssets>all</PrivateAssets>

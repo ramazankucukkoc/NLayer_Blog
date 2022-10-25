@@ -6,7 +6,7 @@ namespace WEBMVC.Models
     {
         public ProductUpdateDto ProductUpdateDto { get; set; }
 
-        public string ProductAddPartial { get; set; }
+        public string ProductUpdatePartial { get; set; }
         public ProductDto ProductDto { get; set; }
     }
 }

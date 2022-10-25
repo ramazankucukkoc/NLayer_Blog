@@ -7,14 +7,16 @@
 @if (Model.ResultStatus == ResultStatus.Success)
 {
  <div id="modalPlaceHolder" aria-hidden="true">
-    </div>
+
+
+ </div>
     <div class="card mb-4">
         <div class="card-header ">
             <i class="fas fa-table mr-1"></i>
          Ürünler Tablosu    
         </div>
         <div class="card-body">
-            <div class="spinner-grow text-primary" role="status">
+            <div class="spinner-grow text-primary" role="status" style="display:none">
                 <span class="visually-hidden">Loading...</span>
             </div>
             <div class="table-responsive">
@@ -56,19 +58,19 @@
                                     </button>
                                 </td>
                                 @*<td>@category.Id</td>*@
-                                <td class ="table-primary text-danger">@product.ProductName</td>
-                                <td class="table-secondary text-danger">@product.Category.Name</td>
-                                <td class="table-danger text-danger">@product.Price</td>
-                                <td class="table-warning text-danger">@product.Stock</td>
-                                <td class="table-info text-danger">@product.Description</td>
+                                <td >@product.ProductName</td>
+                                <td>@product.CategoryId</td>
+                                <td >@product.Price</td>
+                                <td>@product.Stock</td>
+                                <td >@product.Description</td>
 
-                                <td class="table-light text-danger">@product.IsActive</td>
-                                <td class="table-dark text-danger">@product.IsDeleted</td>
-                                <td class="table-primary text-danger">@product.Note</td>
-                                <td class="table-secondary text-danger">@product.CreatedDate.ToShortDateString()</td>
-                                <td class="table-successtext-danger">@product.CreatedByName</td>
-                                <td class="table-danger text-danger">@product.ModifiedDate.ToShortDateString()</td>
-                                <td class="table-info text-danger">@product.ModifiedByName</td>
+                                <td >@product.IsActive</td>
+                                <td >@product.IsDeleted</td>
+                                <td >@product.Note</td>
+                                <td >@product.CreatedDate.ToShortDateString()</td>
+                                <td >@product.CreatedByName</td>
+                                <td >@product.ModifiedDate.ToShortDateString()</td>
+                                <td >@product.ModifiedByName</td>
                                
                             </tr>
                         }
@@ -86,5 +88,7 @@
     </div>
 }
 @section Scripts{
-		<script src="~/js/productindex.js" type="application/ecmascript"></script>
+@*<script src="~/js/productindex.js"></script>
+*@		
+<script src="~/js/productindex.js" type="application/ecmascript"></script>
 }
