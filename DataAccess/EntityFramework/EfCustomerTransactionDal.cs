@@ -2,11 +2,6 @@
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.EntityFramework
 {
@@ -15,5 +10,10 @@ namespace DataAccess.EntityFramework
         public EfCustomerTransactionDal(DbContext context) : base(context)
         {
         }
+
+        //public async Task<List<CustomerTransaction>> GetCustomerTransactionWithProduct()
+        //{
+        //    return await _context
+        //}
     }
 }

@@ -6,13 +6,6 @@ using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
@@ -40,18 +33,18 @@ namespace Business.Concrete
                     Product = addedProduct,
                     ResultStatus = ResultStatus.Success,
                     Message = $"{productAddDto.ProductName} adlı ürün başarıyla eklenmiştir."
-                }) ;
+                });
         }
 
         public async Task<IDataResult<ProductDto>> Delete(int productId, string modifiedByName)
         {
             var productFind = await _unitOfWork.Product.GetAsync(p => p.Id == productId);
-            if (productFind!=null)
+            if (productFind != null)
             {
                 productFind.IsDeleted = true;
                 productFind.ModifiedByName = modifiedByName;
                 productFind.ModifiedDate = DateTime.Now;
-                var deleteProduct=await _unitOfWork.Product.UpdateAsync(productFind);
+                var deleteProduct = await _unitOfWork.Product.UpdateAsync(productFind);
                 await _unitOfWork.SaveAsync();
                 return new DataResult<ProductDto>(ResultStatus.Success, $"{deleteProduct.ProductName} adlı ürün silinmiştir.", new ProductDto
                 {
@@ -77,7 +70,7 @@ namespace Business.Concrete
         public async Task<IDataResult<ProductListDto>> GetAll()
         {
             var getAllProducts = await _unitOfWork.Product.GetAllAsync(null, p => p.Category);
-            if (getAllProducts.Count>-1)
+            if (getAllProducts.Count > -1)
             {
                 return new DataResult<ProductListDto>(ResultStatus.Success, new ProductListDto
                 {
@@ -103,21 +96,21 @@ namespace Business.Concrete
         public async Task<IDataResult<ProductListDto>> GetAllByNonDeleted()
         {
             var products = await _unitOfWork.Product.GetAllAsync(c => !c.IsDeleted, c => c.Category);
-            if (products.Count>-1)
+            if (products.Count > -1)
             {
                 return new DataResult<ProductListDto>(ResultStatus.Success, new ProductListDto
                 {
-                    Products=products,
-                    ResultStatus=ResultStatus.Success,
+                    Products = products,
+                    ResultStatus = ResultStatus.Success,
                 });
 
             }
-            return new DataResult<ProductListDto>(ResultStatus.Success,"Hiçbir ürün bulunamadı"
+            return new DataResult<ProductListDto>(ResultStatus.Success, "Hiçbir ürün bulunamadı"
                 , new ProductListDto
-            {
-                Products=null,
-                ResultStatus=ResultStatus.Error
-            });
+                {
+                    Products = null,
+                    ResultStatus = ResultStatus.Error
+                });
 
         }
 
@@ -132,7 +125,7 @@ namespace Business.Concrete
             if (result)
             {
                 var product = await _unitOfWork.Product.GetAsync(x => x.Id == productId);
-                var updateProduct=_mapper.Map<ProductUpdateDto>(product);
+                var updateProduct = _mapper.Map<ProductUpdateDto>(product);
                 return new DataResult<ProductUpdateDto>(ResultStatus.Success, updateProduct);
             }
             else

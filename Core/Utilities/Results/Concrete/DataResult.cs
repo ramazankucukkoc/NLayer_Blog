@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Utilities.Results.Abstract;
+﻿using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.ComplexTypes;
 
 namespace Core.Utilities.Results.Concrete
 {
-    public class DataResult<T>:IDataResult<T>
+    public class DataResult<T> : IDataResult<T>
     {
-        public DataResult(ResultStatus resultStatus,T data)
+        public DataResult(ResultStatus resultStatus, T data)
         {
             ResultStatus = resultStatus;
             Data = data;
@@ -21,7 +16,7 @@ namespace Core.Utilities.Results.Concrete
             Message = message;
             Data = data;
         }
-        public DataResult(ResultStatus resultStatus, string message, T data,Exception exception)
+        public DataResult(ResultStatus resultStatus, string message, T data, Exception exception)
         {
             ResultStatus = resultStatus;
             Message = message;

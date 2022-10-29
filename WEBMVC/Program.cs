@@ -22,8 +22,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 builder.Services.AddAutoMapper(typeof(CategoryProfile),
-    typeof(ArticleProfile),typeof(ProductProfile),typeof(CompanyProfile),typeof(CompanyTransactionProfile),
-    typeof(CustomerProfile),typeof(CustomerTransactionProfile),typeof(PersonelProfile),typeof(DepartmanProfile));
+    typeof(ArticleProfile), typeof(ProductProfile), typeof(CompanyProfile), typeof(CompanyTransactionProfile),
+    typeof(CustomerProfile), typeof(CustomerTransactionProfile), typeof(PersonelProfile), typeof(DepartmanProfile));
 
 
 

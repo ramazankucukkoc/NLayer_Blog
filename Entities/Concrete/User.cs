@@ -1,14 +1,8 @@
 ﻿using Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entities.Concrete
 {
-    public class User:EntityBase,IEntity
+    public class User : EntityBase, IEntity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -1,20 +1,14 @@
 ﻿using Core.Abstract;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Concrete
 {
-    public class EfEntityRepositoryBase<TEntity>:IEntityRepository<TEntity>
-        where TEntity : class, IEntity,new()
+    public class EfEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
+        where TEntity : class, IEntity, new()
     {
-        private readonly DbContext _context;
+        protected readonly DbContext _context;
 
         public EfEntityRepositoryBase(DbContext context)
         {

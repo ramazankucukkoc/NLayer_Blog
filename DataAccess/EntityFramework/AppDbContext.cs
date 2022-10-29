@@ -1,15 +1,10 @@
 ﻿using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.EntityFramework
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext()
         {
@@ -28,7 +23,7 @@ namespace DataAccess.EntityFramework
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
-        public DbSet<Category> Categories { get; set; }     
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<CompanyTransaction> CompanyTransactions { get; set; }
         public DbSet<Customer> Customers { get; set; }

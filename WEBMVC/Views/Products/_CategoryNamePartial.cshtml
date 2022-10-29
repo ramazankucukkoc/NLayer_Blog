@@ -1,0 +1,13 @@
+﻿@*@model ProductListDto
+
+
+	<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+ Kategori Listesi
+	</a>
+	<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+@foreach (var item in Model.Products)
+{ 
+        <li><a class="dropdown-item" href="#">@item.Category.Name</a></li>
+}
+	</ul>
+*@

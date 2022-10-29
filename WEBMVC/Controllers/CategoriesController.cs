@@ -1,7 +1,6 @@
-﻿    using Business.Abstract;
+﻿using Business.Abstract;
 using Core.Extensions;
 using Core.Utilities.Results.ComplexTypes;
-using Core.Utilities.Results.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -57,9 +56,9 @@ namespace WEBMVC.Controllers
         public async Task<IActionResult> Update(int categoryId)
         {
             var result = await _categoryService.GetCategoryUpdate(categoryId);
-            if (result.ResultStatus==ResultStatus.Success)
+            if (result.ResultStatus == ResultStatus.Success)
             {
-                return PartialView("_CategoryUpdatePartial",result.Data);
+                return PartialView("_CategoryUpdatePartial", result.Data);
             }
             else
             {
@@ -90,15 +89,15 @@ namespace WEBMVC.Controllers
         }
         public async Task<JsonResult> GetAllCategories()
         {
-            var result=await _categoryService.GetAllByNonDeleted();
-            var categories = JsonSerializer.Serialize(result.Data,new JsonSerializerOptions
+            var result = await _categoryService.GetAllByNonDeleted();
+            var categories = JsonSerializer.Serialize(result.Data, new JsonSerializerOptions
             {
-                ReferenceHandler=ReferenceHandler.Preserve
+                ReferenceHandler = ReferenceHandler.Preserve
             });
             return Json(categories);
         }
         [HttpPost]
-        public async Task<JsonResult>Delete(int categoryId)
+        public async Task<JsonResult> Delete(int categoryId)
         {
             var result = await _categoryService.Delete(categoryId, "Ramazan Küçükkoç");
             var deletedCategory = JsonSerializer.Serialize(result.Data);

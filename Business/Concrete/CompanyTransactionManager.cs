@@ -3,11 +3,6 @@ using Business.Abstract;
 using Core.Utilities.Results.Abstract;
 using DataAccess.Abstract;
 using Entities.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
@@ -52,7 +47,7 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
-        public Task<IDataResult<CompanyTransactionUpdateDto>> GetCategoryUpdate(int companyTransactionId)
+        public Task<IDataResult<CompanyTransactionUpdateDto>> GetCompanyTransactionUpdate(int companyTransactionId)
         {
             throw new NotImplementedException();
         }

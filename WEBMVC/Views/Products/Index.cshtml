@@ -1,5 +1,4 @@
-﻿@using Core.Utilities.Results.ComplexTypes
-@model ProductListDto
+﻿@model ProductListDto
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -59,7 +58,7 @@
                                 </td>
                                 @*<td>@category.Id</td>*@
                                 <td >@product.ProductName</td>
-                                <td>@product.CategoryId</td>
+                                <td>@product.Category.Name</td>
                                 <td >@product.Price</td>
                                 <td>@product.Stock</td>
                                 <td >@product.Description</td>

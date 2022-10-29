@@ -1,10 +1,5 @@
 ﻿using Core.Utilities.Results.Abstract;
 using Entities.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
@@ -12,12 +7,12 @@ namespace Business.Abstract
     {
         Task<IDataResult<CustomerTransactionDto>> Get(int customerTransactionId);
         Task<IDataResult<CustomerTransactionUpdateDto>> GetCustomerTransactionUpdate(int customerTransactionId);
-        Task<IDataResult<CustomerTransactionList>> GetAllByCustomer(int customerId);
-        Task<IDataResult<CustomerTransactionList>> GetAllByProduct(int productId);
-        Task<IDataResult<CustomerTransactionList>> GetAllByPersonel(int personelId);
-        Task<IDataResult<CustomerTransactionList>> GetAll();
-        Task<IDataResult<CustomerTransactionList>> GetAllByNonDeleted();
-        Task<IDataResult<CustomerTransactionList>> GetAllByNonDeletedAndActive();
+        Task<IDataResult<CustomerTransactionListDto>> GetAllByCustomer(int customerId);
+        Task<IDataResult<CustomerTransactionListDto>> GetAllByProduct(int productId);
+        Task<IDataResult<CustomerTransactionListDto>> GetAllByPersonel(int personelId);
+        Task<IDataResult<CustomerTransactionListDto>> GetAll();
+        Task<IDataResult<CustomerTransactionListDto>> GetAllByNonDeleted();
+        Task<IDataResult<CustomerTransactionListDto>> GetAllByNonDeletedAndActive();
         Task<IDataResult<CustomerTransactionDto>> Add(CustomerTransactionAddDto customerTransactionAddDto, string createdByName);
         Task<IDataResult<CustomerTransactionDto>> Update(CustomerTransactionUpdateDto customerTransactionUpdateDto, string modifiedByName);
         Task<IDataResult<CustomerTransactionDto>> Delete(int customerTransactionId, string modifiedByName);
